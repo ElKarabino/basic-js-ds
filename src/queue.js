@@ -21,7 +21,8 @@ class Queue {
 
   }
   getUnderlyingList() {
-    return {value: this.queue, next: null}
+    this.next = new ListNode(this.queue);
+    return this.next;
   }
 
   enqueue(value) {
