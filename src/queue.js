@@ -17,20 +17,34 @@ class Queue {
   constructor() {
     this.queue = [];
     this.head = null;
-    this.length = 0
+    this.tail = null
 
   }
   getUnderlyingList() {
-    this.next = new ListNode(this.queue);
-    return this.next;
+    return this.head;
   }
 
   enqueue(value) {
-    return this.queue.push(value);   
+    const newNode = new ListNode(value);   
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
   }
 
   dequeue() {
-    return this.queue.shift();   
+    const value = this.head.value;
+
+    this.head = this.head.next;
+
+    if (!this.head) {
+      this.tail = null;
+    }
+
+    return value;
   }
 }
 
