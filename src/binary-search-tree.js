@@ -24,7 +24,7 @@ class BinarySearchTree {
       if (data < node.data) {
         node.left = addWithin(node.left, data)
       } else if (data > node.data) {
-        node.rigth = addWithin(node.rigth, data)
+        node.right = addWithin(node.right, data)
       }
       return node;
     }
@@ -41,7 +41,7 @@ class BinarySearchTree {
       } else if (data < node.data) {
         return searchWithin(node.left, data)
       } else if (data > node.data) {
-        return searchWithin(node.rigth, data)
+        return searchWithin(node.right, data)
       }
     }
   }
@@ -57,15 +57,44 @@ class BinarySearchTree {
       } else if (data < node.data) {
         return searchWithin(node.left, data)
       } else if (data > node.data) {
-        return searchWithin(node.rigth, data)
+        return searchWithin(node.right, data)
       }
     }
   }
   
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.rootNode = removeNode(this.rootNode, data);
+    function removeNode(node, data) {
+      if (!node) {
+        return null;
+      }
+
+      if  (data < node.data) {
+        node.left = removeNode(node.left, data)
+      } else if (data > node.data) {
+        node.right = removeNode(node.right, data)
+      } else {
+        if (!node.left && !node.right) {
+          node = null;
+        } else if (!node.left) {
+          node = node.right;
+        } else if (!node.right) {
+          node = node.left;
+        } else {
+          const minVal = findMinVal(node.right);
+          node.data = minVal;
+          node.right = removeNode(node.right, minVal)
+        }
+      }
+      return node
+    }
+    function findMinVal(node) {
+      while(node.left) {
+        node = node.left;
+      }
+      return node.data;
+    }
   }
 
   min() {
